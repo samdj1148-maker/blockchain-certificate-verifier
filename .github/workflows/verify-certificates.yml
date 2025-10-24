@@ -1,0 +1,29 @@
+name: Verify Student Certificates
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  verify-certificates:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      
+      - name: Run certificate verification
+        run: python main.py
+      
+      - name: Upload verification report
+        uses: actions/upload-artifact@v4
+        with:
+          name: certificate-verification-report
+          path: verification_report.txt
